@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chaptalization Sugar Addition Calculator | BottleMath</title>
+  <meta name="description" content="Estimate sugar addition to raise must Brix and approximate potential ABV increase.">
+  <meta name="keywords" content="chaptalization calculator, sugar addition wine, raise brix calculator">
+  <link rel="stylesheet" href="../styles.css">
+  <meta name="wch-analytics-domain" content="">
+  <meta name="wch-adsense-client" content="">
+    <!-- SEO Schema Start -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Chaptalization Sugar Calculator",
+      "url": "https://bottlemath.com/calculators/chaptalization-sugar-calculator.html",
+      "description": "Estimate sugar addition to raise must Brix and approximate potential ABV increase.",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "Any",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is chaptalization legal everywhere?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Legal allowances vary by region, appellation, and vintage conditions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is ABV gain approximate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fermentation efficiency and yeast performance can shift realized alcohol yield."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should sugar be added all at once?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Many winemakers stage additions and re-measure to reduce overshoot risk."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://bottlemath.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Chaptalization Sugar Calculator",
+          "item": "https://bottlemath.com/calculators/chaptalization-sugar-calculator.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to use Chaptalization Sugar Calculator",
+      "description": "This calculator estimates sugar mass needed to increase must Brix to a target level.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Step 1",
+          "text": "Enter current Brix, desired target Brix, and total must volume."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Step 2",
+          "text": "The tool computes Brix delta and estimated sugar requirement."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Step 3",
+          "text": "Review expected sugar mass and approximate potential ABV increase."
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <!-- SEO Schema End -->
+
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="../index.html">BottleMath</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="./brix-sg-potential-abv-calculator.html">Brix/SG</a>
+      <a href="./sulfite-addition-calculator.html">Sulfite</a>
+      <a href="./blend-ratio-calculator.html">Blend Ratio</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Winemaking</p>
+      <h1>Chaptalization Sugar Calculator</h1>
+      <p class="lede">Estimate sugar required to move from current to target Brix and approximate ABV gain.</p>
+    </section>
+
+    <section class="calc-layout">
+      <article class="panel">
+        <h2>Inputs</h2>
+        <form id="chaptalizationForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="currentBrix">Current Brix</label>
+              <input id="currentBrix" name="currentBrix" type="number" min="0" step="0.01" value="19" required>
+            </div>
+            <div class="field">
+              <label for="targetBrix">Target Brix</label>
+              <input id="targetBrix" name="targetBrix" type="number" min="0" step="0.01" value="23" required>
+            </div>
+            <div class="field">
+              <label for="volumeL">Must volume (L)</label>
+              <input id="volumeL" name="volumeL" type="number" min="0" step="0.01" value="120" required>
+            </div>
+          </div>
+          <button type="submit">Calculate</button>
+        </form>
+      </article>
+
+      <aside class="panel">
+        <h2>Estimated result</h2>
+        <div class="results" aria-live="polite">
+          <h3>Addition summary</h3>
+          <div class="result-row"><span>Brix increase</span><span id="ch_deltaBrix">-</span></div>
+          <div class="result-row"><span>Sugar needed</span><span id="ch_sugarGrams">-</span></div>
+          <div class="result-row"><span>Sugar needed (kg)</span><span id="ch_sugarKg">-</span></div>
+          <div class="result-row"><span>Estimated ABV gain</span><span id="ch_abvGain">-</span></div>
+          <div class="result-row"><span>Guidance</span><span id="ch_guidance">-</span></div>
+        </div>
+      </aside>
+    </section>
+    <!-- SEO Landing Start -->
+    <section class="content-block">
+      <h2>How It Works</h2>
+      <p>This calculator estimates sugar mass needed to increase must Brix to a target level.</p>
+      <ol>
+        <li>Enter current Brix, desired target Brix, and total must volume.</li>
+        <li>The tool computes Brix delta and estimated sugar requirement.</li>
+        <li>Review expected sugar mass and approximate potential ABV increase.</li>
+      </ol>
+    </section>
+
+    <section class="content-block">
+      <h2>FAQ</h2>
+      <h3>Is chaptalization legal everywhere?</h3>
+      <p>No. Legal allowances vary by region, appellation, and vintage conditions.</p>
+      <h3>Why is ABV gain approximate?</h3>
+      <p>Fermentation efficiency and yeast performance can shift realized alcohol yield.</p>
+      <h3>Should sugar be added all at once?</h3>
+      <p>Many winemakers stage additions and re-measure to reduce overshoot risk.</p>
+    </section>
+    <!-- SEO Landing End -->
+
+    <section class="ad-slot" aria-label="Advertisement">
+      <p>Advertisement</p>
+      <div class="ad-box">300 x 250 ad slot</div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>BottleMath</p>
+    <div class="footer-links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../terms.html">Terms</a>
+      <a href="../affiliate-disclosure.html">Affiliate Disclosure</a>
+      <a href="../privacy.html">Privacy</a>
+      <button class="link-btn" data-cookie-settings>Cookie settings</button>
+    </div>
+  </footer>
+
+  <script src="../scripts/site.js"></script>
+  <script src="../scripts/chaptalization.js"></script>
+</body>
+</html>

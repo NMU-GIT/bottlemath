@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blend Ratio Calculator | BottleMath</title>
+  <meta name="description" content="Blend two wine components and estimate resulting ABV, acidity, sugar, and target ABV ratio guidance.">
+  <meta name="keywords" content="wine blend calculator, blend ratio calculator, wine blending ABV">
+  <link rel="stylesheet" href="../styles.css">
+  <meta name="wch-analytics-domain" content="">
+  <meta name="wch-adsense-client" content="">
+    <!-- SEO Schema Start -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Blend Ratio Calculator",
+      "url": "https://bottlemath.com/calculators/blend-ratio-calculator.html",
+      "description": "Blend two wine components and estimate resulting ABV, acidity, sugar, and target ABV ratio guidance.",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "Any",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How are blend metrics computed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ABV, acidity, and sugar are computed as volume-weighted averages."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why can target ratio be unavailable?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If target ABV is outside the range of component ABVs, no feasible two-component ratio exists."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I model more than two components?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use iterative two-component passes or external blending sheets for multi-lot optimization."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://bottlemath.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blend Ratio Calculator",
+          "item": "https://bottlemath.com/calculators/blend-ratio-calculator.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to use Blend Ratio Calculator",
+      "description": "This calculator blends two components using weighted-average calculations.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Step 1",
+          "text": "Enter volume and chemistry for component A and component B."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Step 2",
+          "text": "Set optional target ABV to compute ratio guidance."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Step 3",
+          "text": "Review resulting blend ABV, acidity, sugar, and target-ratio output."
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <!-- SEO Schema End -->
+
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="../index.html">BottleMath</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="./brix-sg-potential-abv-calculator.html">Brix/SG</a>
+      <a href="./dilution-fortification-calculator.html">Dilution/Fortify</a>
+      <a href="./chaptalization-sugar-calculator.html">Chaptalization</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Winemaking</p>
+      <h1>Blend Ratio Calculator</h1>
+      <p class="lede">Blend two components and estimate resulting chemistry plus the ratio needed for a target ABV.</p>
+    </section>
+
+    <section class="calc-layout">
+      <article class="panel">
+        <h2>Inputs</h2>
+        <form id="blendRatioForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="volA">Component A volume (L)</label>
+              <input id="volA" name="volA" type="number" min="0" step="0.01" value="20" required>
+            </div>
+            <div class="field">
+              <label for="abvA">Component A ABV (%)</label>
+              <input id="abvA" name="abvA" type="number" min="0" step="0.01" value="13.8" required>
+            </div>
+            <div class="field">
+              <label for="acidA">Component A acidity (g/L)</label>
+              <input id="acidA" name="acidA" type="number" min="0" step="0.01" value="5.8" required>
+            </div>
+            <div class="field">
+              <label for="sugarA">Component A sugar (g/L)</label>
+              <input id="sugarA" name="sugarA" type="number" min="0" step="0.01" value="2" required>
+            </div>
+            <div class="field">
+              <label for="volB">Component B volume (L)</label>
+              <input id="volB" name="volB" type="number" min="0" step="0.01" value="12" required>
+            </div>
+            <div class="field">
+              <label for="abvB">Component B ABV (%)</label>
+              <input id="abvB" name="abvB" type="number" min="0" step="0.01" value="11.9" required>
+            </div>
+            <div class="field">
+              <label for="acidB">Component B acidity (g/L)</label>
+              <input id="acidB" name="acidB" type="number" min="0" step="0.01" value="7.2" required>
+            </div>
+            <div class="field">
+              <label for="sugarB">Component B sugar (g/L)</label>
+              <input id="sugarB" name="sugarB" type="number" min="0" step="0.01" value="4" required>
+            </div>
+            <div class="field">
+              <label for="targetAbv">Target ABV for ratio guidance (%)</label>
+              <input id="targetAbv" name="targetAbv" type="number" min="0" step="0.01" value="12.8" required>
+            </div>
+          </div>
+          <button type="submit">Calculate</button>
+        </form>
+      </article>
+
+      <aside class="panel">
+        <h2>Estimated result</h2>
+        <div class="results" aria-live="polite">
+          <h3>Blend summary</h3>
+          <div class="result-row"><span>Total blend volume</span><span id="bl_totalVol">-</span></div>
+          <div class="result-row"><span>Blend ABV</span><span id="bl_abv">-</span></div>
+          <div class="result-row"><span>Blend acidity</span><span id="bl_acidity">-</span></div>
+          <div class="result-row"><span>Blend sugar</span><span id="bl_sugar">-</span></div>
+          <div class="result-row"><span>Target ABV ratio guidance</span><span id="bl_targetRatio">-</span></div>
+        </div>
+      </aside>
+    </section>
+    <!-- SEO Landing Start -->
+    <section class="content-block">
+      <h2>How It Works</h2>
+      <p>This calculator blends two components using weighted-average calculations.</p>
+      <ol>
+        <li>Enter volume and chemistry for component A and component B.</li>
+        <li>Set optional target ABV to compute ratio guidance.</li>
+        <li>Review resulting blend ABV, acidity, sugar, and target-ratio output.</li>
+      </ol>
+    </section>
+
+    <section class="content-block">
+      <h2>FAQ</h2>
+      <h3>How are blend metrics computed?</h3>
+      <p>ABV, acidity, and sugar are computed as volume-weighted averages.</p>
+      <h3>Why can target ratio be unavailable?</h3>
+      <p>If target ABV is outside the range of component ABVs, no feasible two-component ratio exists.</p>
+      <h3>Can I model more than two components?</h3>
+      <p>Use iterative two-component passes or external blending sheets for multi-lot optimization.</p>
+    </section>
+    <!-- SEO Landing End -->
+
+    <section class="ad-slot" aria-label="Advertisement">
+      <p>Advertisement</p>
+      <div class="ad-box">300 x 250 ad slot</div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>BottleMath</p>
+    <div class="footer-links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../terms.html">Terms</a>
+      <a href="../affiliate-disclosure.html">Affiliate Disclosure</a>
+      <a href="../privacy.html">Privacy</a>
+      <button class="link-btn" data-cookie-settings>Cookie settings</button>
+    </div>
+  </footer>
+
+  <script src="../scripts/site.js"></script>
+  <script src="../scripts/blend-ratio.js"></script>
+</body>
+</html>

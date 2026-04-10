@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cellar ROI and Resale Net Calculator | BottleMath</title>
+  <meta name="description" content="Estimate cellar investment net return after carrying costs, platform fees, and taxes.">
+  <meta name="keywords" content="wine investment calculator, cellar ROI calculator, wine resale net">
+  <link rel="stylesheet" href="../styles.css">
+  <meta name="wch-analytics-domain" content="">
+  <meta name="wch-adsense-client" content="">
+    <!-- SEO Schema Start -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Cellar ROI and Resale Net",
+      "url": "https://bottlemath.com/calculators/cellar-roi-resale-calculator.html",
+      "description": "Estimate cellar investment net return after carrying costs, platform fees, and taxes.",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "Any",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why can annualized return show N/A?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If cash-flow assumptions do not produce a positive realizable outcome, annualization may be undefined."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does tax apply to losses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In this model, tax applies only when gain before tax is positive."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I compare auction vs broker routes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Run separate scenarios with different commission and fee assumptions."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://bottlemath.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Cellar ROI and Resale Net",
+          "item": "https://bottlemath.com/calculators/cellar-roi-resale-calculator.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to use Cellar ROI and Resale Net",
+      "description": "This calculator estimates realized resale return from a wine investment position.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Step 1",
+          "text": "Enter original purchase total, holding period, and annual carrying costs."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Step 2",
+          "text": "Add expected gross sale value plus commission, fixed fees, and tax assumptions."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Step 3",
+          "text": "Review net cash in, net profit or loss, break-even sale value, and annualized return."
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <!-- SEO Schema End -->
+
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="../index.html">BottleMath</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="./cellar-storage-cost-calculator.html">Storage Cost</a>
+      <a href="./en-primeur-calculator-uk.html">En Primeur</a>
+      <a href="./wine-import-duty-calculator.html">Import Duty</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Calculator</p>
+      <h1>Cellar ROI and Resale Net</h1>
+      <p class="lede">Estimate net proceeds and annualized return once fees, carrying costs, and tax assumptions are included.</p>
+    </section>
+
+    <section class="calc-layout">
+      <article class="panel">
+        <h2>Inputs</h2>
+        <form id="cellarRoiForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="purchaseTotal">Original purchase total (GBP)</label>
+              <input id="purchaseTotal" name="purchaseTotal" type="number" min="0" step="0.01" value="4800" required>
+            </div>
+            <div class="field">
+              <label for="bottles">Total bottles</label>
+              <input id="bottles" name="bottles" type="number" min="0" value="120" required>
+            </div>
+            <div class="field">
+              <label for="annualCarry">Annual carrying cost (GBP)</label>
+              <input id="annualCarry" name="annualCarry" type="number" min="0" step="0.01" value="420" required>
+            </div>
+            <div class="field">
+              <label for="years">Holding period (years)</label>
+              <input id="years" name="years" type="number" min="0.1" step="0.1" value="6" required>
+            </div>
+            <div class="field">
+              <label for="expectedSale">Expected gross sale value (GBP)</label>
+              <input id="expectedSale" name="expectedSale" type="number" min="0" step="0.01" value="9800" required>
+            </div>
+            <div class="field">
+              <label for="commissionPct">Platform commission (%)</label>
+              <input id="commissionPct" name="commissionPct" type="number" min="0" max="99" step="0.01" value="15" required>
+            </div>
+            <div class="field">
+              <label for="sellerFees">Fixed selling fees (GBP)</label>
+              <input id="sellerFees" name="sellerFees" type="number" min="0" step="0.01" value="80" required>
+            </div>
+            <div class="field">
+              <label for="taxRate">Tax on gains (%)</label>
+              <input id="taxRate" name="taxRate" type="number" min="0" step="0.01" value="20" required>
+            </div>
+          </div>
+          <button type="submit">Calculate</button>
+        </form>
+      </article>
+
+      <aside class="panel">
+        <h2>Estimated result</h2>
+        <div class="results" aria-live="polite">
+          <h3>Return summary</h3>
+          <div class="result-row"><span>Total cash out</span><span id="r_cashOut">-</span></div>
+          <div class="result-row"><span>Gross after selling fees</span><span id="r_grossAfterFees">-</span></div>
+          <div class="result-row"><span>Estimated tax</span><span id="r_tax">-</span></div>
+          <div class="result-row"><span>Net cash in</span><span id="r_netCashIn" class="success">-</span></div>
+          <div class="result-row"><span>Net profit/loss</span><span id="r_netProfit">-</span></div>
+          <div class="result-row"><span>Net profit/loss per bottle</span><span id="r_profitPerBottle">-</span></div>
+          <div class="result-row"><span>Break-even gross sale</span><span id="r_breakEvenSale">-</span></div>
+          <div class="result-row"><span>Annualized return</span><span id="r_annualized">-</span></div>
+        </div>
+      </aside>
+    </section>
+    <!-- SEO Landing Start -->
+    <section class="content-block">
+      <h2>How It Works</h2>
+      <p>This calculator estimates realized resale return from a wine investment position.</p>
+      <ol>
+        <li>Enter original purchase total, holding period, and annual carrying costs.</li>
+        <li>Add expected gross sale value plus commission, fixed fees, and tax assumptions.</li>
+        <li>Review net cash in, net profit or loss, break-even sale value, and annualized return.</li>
+      </ol>
+    </section>
+
+    <section class="content-block">
+      <h2>FAQ</h2>
+      <h3>Why can annualized return show N/A?</h3>
+      <p>If cash-flow assumptions do not produce a positive realizable outcome, annualization may be undefined.</p>
+      <h3>Does tax apply to losses?</h3>
+      <p>In this model, tax applies only when gain before tax is positive.</p>
+      <h3>Can I compare auction vs broker routes?</h3>
+      <p>Yes. Run separate scenarios with different commission and fee assumptions.</p>
+    </section>
+    <!-- SEO Landing End -->
+
+    <section class="ad-slot" aria-label="Advertisement">
+      <p>Advertisement</p>
+      <div class="ad-box">300 x 250 ad slot</div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>BottleMath</p>
+    <div class="footer-links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../terms.html">Terms</a>
+      <a href="../affiliate-disclosure.html">Affiliate Disclosure</a>
+      <a href="../privacy.html">Privacy</a>
+      <button class="link-btn" data-cookie-settings>Cookie settings</button>
+    </div>
+  </footer>
+
+  <script src="../scripts/site.js"></script>
+  <script src="../scripts/cellar-roi.js"></script>
+</body>
+</html>

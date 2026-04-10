@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wine Calories and UK Units Calculator | BottleMath</title>
+  <meta name="description" content="Calculate estimated calories and UK alcohol units per glass, bottle, and total servings.">
+  <meta name="keywords" content="wine calories calculator, alcohol units calculator uk, wine units per glass">
+  <meta name="wch-analytics-domain" content="">
+  <meta name="wch-adsense-client" content="">
+  <link rel="stylesheet" href="../styles.css">
+    <!-- SEO Schema Start -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Wine Calories and UK Units",
+      "url": "https://bottlemath.com/calculators/wine-calories-units-calculator.html",
+      "description": "Calculate estimated calories and UK alcohol units per glass, bottle, and total servings.",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "Any",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How are UK units calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "UK units are calculated as milliliters multiplied by ABV percent divided by 1000."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why are calories approximate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Residual sugar and style differences affect energy beyond alcohol-only calculations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I compare small and large pours?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Change serving size to compare unit and calorie impact directly."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://bottlemath.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Wine Calories and UK Units",
+          "item": "https://bottlemath.com/calculators/wine-calories-units-calculator.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to use Wine Calories and UK Units",
+      "description": "This calculator estimates energy and alcohol units from ABV and serving size.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Step 1",
+          "text": "Enter serving size, ABV, number of servings, and bottle size."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Step 2",
+          "text": "The tool converts alcohol content into UK units per serving and bottle."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Step 3",
+          "text": "It then estimates calories and totals for your selected number of servings."
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <!-- SEO Schema End -->
+
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="../index.html">BottleMath</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="./wedding-wine-calculator.html">Wedding</a>
+      <a href="./en-primeur-calculator-uk.html">En Primeur</a>
+      <a href="./wine-import-duty-calculator.html">Import Duty</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Calculator</p>
+      <h1>Wine Calories and UK Units</h1>
+      <p class="lede">Estimate units and calories based on serving size and ABV. Useful for glass-by-glass or bottle planning.</p>
+    </section>
+
+    <section class="calc-layout">
+      <article class="panel">
+        <h2>Inputs</h2>
+        <form id="calorieForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="servingMl">Serving size (ml)</label>
+              <input id="servingMl" name="servingMl" type="number" min="25" max="1000" value="150" required>
+            </div>
+            <div class="field">
+              <label for="abv">Alcohol by volume (% ABV)</label>
+              <input id="abv" name="abv" type="number" min="1" max="25" step="0.1" value="13" required>
+            </div>
+            <div class="field">
+              <label for="servings">Number of servings</label>
+              <input id="servings" name="servings" type="number" min="1" max="100" value="1" required>
+            </div>
+            <div class="field">
+              <label for="bottleSizeMl">Bottle size (ml)</label>
+              <input id="bottleSizeMl" name="bottleSizeMl" type="number" min="187" max="3000" value="750" required>
+            </div>
+          </div>
+          <button type="submit">Calculate</button>
+        </form>
+      </article>
+
+      <aside class="panel">
+        <h2>Estimated result</h2>
+        <div class="results" aria-live="polite">
+          <h3>Per serving</h3>
+          <div class="result-row"><span>UK units</span><span id="c_unitsServing">-</span></div>
+          <div class="result-row"><span>Calories (kcal)</span><span id="c_calServing">-</span></div>
+          <h3>Selected total</h3>
+          <div class="result-row"><span>Total units</span><span id="c_unitsTotal">-</span></div>
+          <div class="result-row"><span>Total calories</span><span id="c_calTotal">-</span></div>
+          <h3>Per bottle</h3>
+          <div class="result-row"><span>UK units per bottle</span><span id="c_unitsBottle">-</span></div>
+          <div class="result-row"><span>Calories per bottle</span><span id="c_calBottle">-</span></div>
+        </div>
+        <p class="notice">Calories are estimated from alcohol content and may vary by residual sugar and style.</p>
+      </aside>
+    </section>
+    <!-- SEO Landing Start -->
+    <section class="content-block">
+      <h2>How It Works</h2>
+      <p>This calculator estimates energy and alcohol units from ABV and serving size.</p>
+      <ol>
+        <li>Enter serving size, ABV, number of servings, and bottle size.</li>
+        <li>The tool converts alcohol content into UK units per serving and bottle.</li>
+        <li>It then estimates calories and totals for your selected number of servings.</li>
+      </ol>
+    </section>
+
+    <section class="content-block">
+      <h2>FAQ</h2>
+      <h3>How are UK units calculated?</h3>
+      <p>UK units are calculated as milliliters multiplied by ABV percent divided by 1000.</p>
+      <h3>Why are calories approximate?</h3>
+      <p>Residual sugar and style differences affect energy beyond alcohol-only calculations.</p>
+      <h3>Can I compare small and large pours?</h3>
+      <p>Yes. Change serving size to compare unit and calorie impact directly.</p>
+    </section>
+    <!-- SEO Landing End -->
+
+    <section class="ad-slot" aria-label="Advertisement">
+      <p>Advertisement</p>
+      <div class="ad-box">300 x 250 ad slot</div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>BottleMath</p>
+    <div class="footer-links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../terms.html">Terms</a>
+      <a href="../affiliate-disclosure.html">Affiliate Disclosure</a>
+      <a href="../privacy.html">Privacy</a>
+      <button class="link-btn" data-cookie-settings>Cookie settings</button>
+    </div>
+  </footer>
+
+  <script src="../scripts/site.js"></script>
+  <script src="../scripts/calories.js"></script>
+</body>
+</html>

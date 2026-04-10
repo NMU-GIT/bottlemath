@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wine Import Duty Calculator (Multi-Country) | BottleMath</title>
+  <meta name="description" content="Estimate wine import landed costs by country with editable customs duty, excise, and sales tax rates.">
+  <meta name="keywords" content="wine import duty calculator, wine tax calculator, landed cost wine import">
+  <link rel="stylesheet" href="../styles.css">
+  <meta name="wch-analytics-domain" content="">
+  <meta name="wch-adsense-client" content="">
+    <!-- SEO Schema Start -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Wine Import Duty Calculator",
+      "url": "https://bottlemath.com/calculators/wine-import-duty-calculator.html",
+      "description": "Estimate wine import landed costs by country with editable customs duty, excise, and sales tax rates.",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "Any",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are the country presets official rates?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Presets are planning defaults and may be outdated; always verify official current rates before importing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is CIF in this calculator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "CIF is cost plus insurance and freight, used as the customs-value base in many jurisdictions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I override every rate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Customs duty, excise per litre pure alcohol, and sales tax are all editable."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://bottlemath.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Wine Import Duty Calculator",
+          "item": "https://bottlemath.com/calculators/wine-import-duty-calculator.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to use Wine Import Duty Calculator",
+      "description": "This calculator models import landed cost using editable duty and tax assumptions by market.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Step 1",
+          "text": "Choose a country preset as a starting point and adjust rates if needed."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Step 2",
+          "text": "Enter shipment details, value, shipping and insurance, and bottle profile."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Step 3",
+          "text": "Review landed total, per-bottle landed cost, and tax component split."
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <!-- SEO Schema End -->
+
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="../index.html">BottleMath</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="./en-primeur-calculator-uk.html">En Primeur</a>
+      <a href="./wedding-wine-calculator.html">Wedding</a>
+      <a href="./wine-calories-units-calculator.html">Calories & Units</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Calculator</p>
+      <h1>Wine Import Duty Calculator</h1>
+      <p class="lede">Estimate total landed cost using editable country presets for customs duty, excise, and sales tax/VAT/GST.</p>
+    </section>
+
+    <section class="calc-layout">
+      <article class="panel">
+        <h2>Inputs</h2>
+        <p class="notice">Presets are editable assumptions. Non-UK presets use conservative starter values and should be updated before decisions.</p>
+        <form id="importDutyForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="country">Country preset</label>
+              <select id="country" name="country">
+                <option value="uk">United Kingdom</option>
+                <option value="hk">Hong Kong</option>
+                <option value="sg">Singapore</option>
+                <option value="us">United States (manual rates)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="currencyCode">Currency</label>
+              <input id="currencyCode" name="currencyCode" type="text" value="GBP" readonly>
+            </div>
+            <div class="field">
+              <label for="bottles">Number of bottles</label>
+              <input id="bottles" name="bottles" type="number" min="1" value="12" required>
+            </div>
+            <div class="field">
+              <label for="bottleSizeMl">Bottle size (ml)</label>
+              <input id="bottleSizeMl" name="bottleSizeMl" type="number" min="375" max="3000" value="750" required>
+            </div>
+            <div class="field">
+              <label for="abv">ABV (%)</label>
+              <input id="abv" name="abv" type="number" min="1" max="25" step="0.1" value="13" required>
+            </div>
+            <div class="field">
+              <label for="wineValue">Wine value (ex-tax)</label>
+              <input id="wineValue" name="wineValue" type="number" min="0" step="0.01" value="360" required>
+            </div>
+            <div class="field">
+              <label for="shippingInsurance">Shipping and insurance</label>
+              <input id="shippingInsurance" name="shippingInsurance" type="number" min="0" step="0.01" value="45" required>
+            </div>
+            <div class="field">
+              <label for="customsRate">Customs duty rate (%)</label>
+              <input id="customsRate" name="customsRate" type="number" min="0" step="0.01" value="0" required>
+            </div>
+            <div class="field">
+              <label for="excisePerLpa">Excise per litre pure alcohol</label>
+              <input id="excisePerLpa" name="excisePerLpa" type="number" min="0" step="0.01" value="31.64" required>
+            </div>
+            <div class="field">
+              <label for="salesTaxRate">Sales tax/VAT/GST (%)</label>
+              <input id="salesTaxRate" name="salesTaxRate" type="number" min="0" step="0.01" value="20" required>
+            </div>
+            <div class="field">
+              <label for="otherFees">Other fixed fees</label>
+              <input id="otherFees" name="otherFees" type="number" min="0" step="0.01" value="0" required>
+            </div>
+          </div>
+          <button type="submit">Calculate</button>
+        </form>
+      </article>
+
+      <aside class="panel">
+        <h2>Estimated result</h2>
+        <div class="results" aria-live="polite">
+          <h3>Import summary</h3>
+          <div class="result-row"><span>Currency</span><span id="i_currencyLabel">GBP</span></div>
+          <div class="result-row"><span>Total alcohol (LPA)</span><span id="i_lpa">-</span></div>
+          <div class="result-row"><span>CIF (goods + shipping)</span><span id="i_cif">-</span></div>
+          <div class="result-row"><span>Customs duty</span><span id="i_customs">-</span></div>
+          <div class="result-row"><span>Excise duty</span><span id="i_excise">-</span></div>
+          <div class="result-row"><span>Sales/VAT/GST</span><span id="i_tax">-</span></div>
+          <div class="result-row"><span>Landed total</span><span id="i_total" class="success">-</span></div>
+          <div class="result-row"><span>Landed per bottle</span><span id="i_perBottle" class="success">-</span></div>
+        </div>
+      </aside>
+    </section>
+    <!-- SEO Landing Start -->
+    <section class="content-block">
+      <h2>How It Works</h2>
+      <p>This calculator models import landed cost using editable duty and tax assumptions by market.</p>
+      <ol>
+        <li>Choose a country preset as a starting point and adjust rates if needed.</li>
+        <li>Enter shipment details, value, shipping and insurance, and bottle profile.</li>
+        <li>Review landed total, per-bottle landed cost, and tax component split.</li>
+      </ol>
+    </section>
+
+    <section class="content-block">
+      <h2>FAQ</h2>
+      <h3>Are the country presets official rates?</h3>
+      <p>Presets are planning defaults and may be outdated; always verify official current rates before importing.</p>
+      <h3>What is CIF in this calculator?</h3>
+      <p>CIF is cost plus insurance and freight, used as the customs-value base in many jurisdictions.</p>
+      <h3>Can I override every rate?</h3>
+      <p>Yes. Customs duty, excise per litre pure alcohol, and sales tax are all editable.</p>
+    </section>
+    <!-- SEO Landing End -->
+
+    <section class="ad-slot" aria-label="Advertisement">
+      <p>Advertisement</p>
+      <div class="ad-box">300 x 250 ad slot</div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>BottleMath</p>
+    <div class="footer-links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../terms.html">Terms</a>
+      <a href="../affiliate-disclosure.html">Affiliate Disclosure</a>
+      <a href="../privacy.html">Privacy</a>
+      <button class="link-btn" data-cookie-settings>Cookie settings</button>
+    </div>
+  </footer>
+
+  <script src="../scripts/site.js"></script>
+  <script src="../scripts/import-duty.js"></script>
+</body>
+</html>

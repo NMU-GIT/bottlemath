@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wedding Wine Calculator | BottleMath</title>
+  <meta name="description" content="Estimate wedding wine bottle counts, case totals, and rough budget by guest count and drinking rate.">
+  <meta name="keywords" content="wedding wine calculator, wine quantity calculator, how much wine for wedding">
+  <meta name="wch-analytics-domain" content="">
+  <meta name="wch-adsense-client" content="">
+  <link rel="stylesheet" href="../styles.css">
+    <!-- SEO Schema Start -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Wedding Wine Quantity Calculator",
+      "url": "https://bottlemath.com/calculators/wedding-wine-calculator.html",
+      "description": "Estimate wedding wine bottle counts, case totals, and rough budget by guest count and drinking rate.",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "Any",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many glasses does one bottle represent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The default model uses about five 150 ml pours per 750 ml bottle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I add a safety margin?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Many events add a small buffer to avoid running out near the end of service."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I model only one wine style?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Set one style share to 100% and the others to 0%."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://bottlemath.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Wedding Wine Quantity Calculator",
+          "item": "https://bottlemath.com/calculators/wedding-wine-calculator.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to use Wedding Wine Quantity Calculator",
+      "description": "This calculator estimates total bottles needed from guest count and drinking pace assumptions.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Step 1",
+          "text": "Enter guest count, percentage of wine drinkers, and service duration."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Step 2",
+          "text": "Set average glasses per hour and desired red/white/sparkling split."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Step 3",
+          "text": "Review total glasses, bottles, cases, and estimated bottle budget."
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <!-- SEO Schema End -->
+
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="../index.html">BottleMath</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="./wine-calories-units-calculator.html">Calories & Units</a>
+      <a href="./en-primeur-calculator-uk.html">En Primeur</a>
+      <a href="./wine-import-duty-calculator.html">Import Duty</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Calculator</p>
+      <h1>Wedding Wine Quantity Calculator</h1>
+      <p class="lede">Estimate total bottles, style split, and case count for your event based on practical serving assumptions.</p>
+    </section>
+
+    <section class="calc-layout">
+      <article class="panel">
+        <h2>Inputs</h2>
+        <p class="notice">Default assumptions are editable.</p>
+        <form id="weddingForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="guests">Total guests</label>
+              <input id="guests" name="guests" type="number" min="1" value="100" required>
+            </div>
+            <div class="field">
+              <label for="drinkersPct">Guests drinking wine (%)</label>
+              <input id="drinkersPct" name="drinkersPct" type="number" min="1" max="100" value="80" required>
+            </div>
+            <div class="field">
+              <label for="hours">Wine service hours</label>
+              <input id="hours" name="hours" type="number" min="1" max="12" step="0.5" value="5" required>
+            </div>
+            <div class="field">
+              <label for="glassesPerHour">Glasses per person per hour</label>
+              <input id="glassesPerHour" name="glassesPerHour" type="number" min="0.3" max="3" step="0.1" value="0.8" required>
+            </div>
+            <div class="field">
+              <label for="redShare">Red wine share (%)</label>
+              <input id="redShare" name="redShare" type="number" min="0" max="100" value="45" required>
+            </div>
+            <div class="field">
+              <label for="whiteShare">White wine share (%)</label>
+              <input id="whiteShare" name="whiteShare" type="number" min="0" max="100" value="45" required>
+            </div>
+            <div class="field">
+              <label for="sparklingShare">Sparkling share (%)</label>
+              <input id="sparklingShare" name="sparklingShare" type="number" min="0" max="100" value="10" required>
+            </div>
+            <div class="field">
+              <label for="avgBottlePrice">Average bottle price (GBP)</label>
+              <input id="avgBottlePrice" name="avgBottlePrice" type="number" min="0" step="0.5" value="12" required>
+            </div>
+          </div>
+          <button type="submit">Calculate</button>
+        </form>
+      </article>
+
+      <aside class="panel">
+        <h2>Estimated result</h2>
+        <div id="weddingResults" class="results" aria-live="polite">
+          <h3>Totals</h3>
+          <div class="result-row"><span>Total glasses</span><span id="w_totalGlasses">-</span></div>
+          <div class="result-row"><span>Total bottles</span><span id="w_totalBottles">-</span></div>
+          <div class="result-row"><span>Total 12-bottle cases</span><span id="w_totalCases">-</span></div>
+          <div class="result-row"><span>Estimated budget</span><span id="w_budget">-</span></div>
+          <h3>Style split</h3>
+          <div class="result-row"><span>Red bottles</span><span id="w_red">-</span></div>
+          <div class="result-row"><span>White bottles</span><span id="w_white">-</span></div>
+          <div class="result-row"><span>Sparkling bottles</span><span id="w_sparkling">-</span></div>
+        </div>
+        <p class="notice">Assumption: one 750ml bottle pours about five 150ml glasses.</p>
+      </aside>
+    </section>
+    <!-- SEO Landing Start -->
+    <section class="content-block">
+      <h2>How It Works</h2>
+      <p>This calculator estimates total bottles needed from guest count and drinking pace assumptions.</p>
+      <ol>
+        <li>Enter guest count, percentage of wine drinkers, and service duration.</li>
+        <li>Set average glasses per hour and desired red/white/sparkling split.</li>
+        <li>Review total glasses, bottles, cases, and estimated bottle budget.</li>
+      </ol>
+    </section>
+
+    <section class="content-block">
+      <h2>FAQ</h2>
+      <h3>How many glasses does one bottle represent?</h3>
+      <p>The default model uses about five 150 ml pours per 750 ml bottle.</p>
+      <h3>Should I add a safety margin?</h3>
+      <p>Yes. Many events add a small buffer to avoid running out near the end of service.</p>
+      <h3>Can I model only one wine style?</h3>
+      <p>Yes. Set one style share to 100% and the others to 0%.</p>
+    </section>
+    <!-- SEO Landing End -->
+
+    <section class="ad-slot" aria-label="Advertisement">
+      <p>Advertisement</p>
+      <div class="ad-box">300 x 250 ad slot</div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>BottleMath</p>
+    <div class="footer-links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../terms.html">Terms</a>
+      <a href="../affiliate-disclosure.html">Affiliate Disclosure</a>
+      <a href="../privacy.html">Privacy</a>
+      <button class="link-btn" data-cookie-settings>Cookie settings</button>
+    </div>
+  </footer>
+
+  <script src="../scripts/site.js"></script>
+  <script src="../scripts/wedding.js"></script>
+</body>
+</html>

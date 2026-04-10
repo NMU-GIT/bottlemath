@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dilution and Fortification Calculator | BottleMath</title>
+  <meta name="description" content="Estimate water addition for dilution or spirit addition for fortification to reach a target ABV.">
+  <meta name="keywords" content="wine dilution calculator, fortification calculator, target ABV calculator">
+  <link rel="stylesheet" href="../styles.css">
+  <meta name="wch-analytics-domain" content="">
+  <meta name="wch-adsense-client" content="">
+    <!-- SEO Schema Start -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Dilution and Fortification Calculator",
+      "url": "https://bottlemath.com/calculators/dilution-fortification-calculator.html",
+      "description": "Estimate water addition for dilution or spirit addition for fortification to reach a target ABV.",
+      "applicationCategory": "CalculatorApplication",
+      "operatingSystem": "Any",
+      "isAccessibleForFree": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "When is fortification impossible?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If fortifier ABV is at or below target ABV, the target cannot be reached by addition."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does dilution mode assume?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It assumes added water contributes volume without alcohol content."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I add in one step?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use staged additions and re-check ABV to minimize overshoot."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://bottlemath.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Dilution and Fortification Calculator",
+          "item": "https://bottlemath.com/calculators/dilution-fortification-calculator.html"
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "name": "How to use Dilution and Fortification Calculator",
+      "description": "This calculator estimates volume additions for ABV reduction or fortification.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Step 1",
+          "text": "Choose dilution or fortification mode."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Step 2",
+          "text": "Enter current volume, current ABV, target ABV, and fortifier ABV if applicable."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Step 3",
+          "text": "Review required addition volume and resulting final volume/ABV."
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <!-- SEO Schema End -->
+
+</head>
+<body>
+  <header class="site-header">
+    <a class="logo" href="../index.html">BottleMath</a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="./blend-ratio-calculator.html">Blend Ratio</a>
+      <a href="./brix-sg-potential-abv-calculator.html">Brix/SG</a>
+      <a href="./sulfite-addition-calculator.html">Sulfite</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">Winemaking</p>
+      <h1>Dilution and Fortification Calculator</h1>
+      <p class="lede">Estimate volume additions to hit a target ABV by water dilution or fortifier blending.</p>
+    </section>
+
+    <section class="calc-layout">
+      <article class="panel">
+        <h2>Inputs</h2>
+        <form id="dilutionFortifyForm" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="mode">Mode</label>
+              <select id="mode" name="mode">
+                <option value="dilute">Dilute with water</option>
+                <option value="fortify">Fortify with spirit</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="currentVolume">Current volume (L)</label>
+              <input id="currentVolume" name="currentVolume" type="number" min="0" step="0.01" value="100" required>
+            </div>
+            <div class="field">
+              <label for="currentAbv">Current ABV (%)</label>
+              <input id="currentAbv" name="currentAbv" type="number" min="0" step="0.01" value="14.5" required>
+            </div>
+            <div class="field">
+              <label for="targetAbv">Target ABV (%)</label>
+              <input id="targetAbv" name="targetAbv" type="number" min="0" step="0.01" value="13" required>
+            </div>
+            <div class="field">
+              <label for="fortifierAbv">Fortifier ABV (%)</label>
+              <input id="fortifierAbv" name="fortifierAbv" type="number" min="0" step="0.01" value="95" required>
+            </div>
+          </div>
+          <button type="submit">Calculate</button>
+        </form>
+      </article>
+
+      <aside class="panel">
+        <h2>Estimated result</h2>
+        <div class="results" aria-live="polite">
+          <h3>Adjustment summary</h3>
+          <div class="result-row"><span>Addition volume</span><span id="df_addVolume">-</span></div>
+          <div class="result-row"><span>Final volume</span><span id="df_finalVolume">-</span></div>
+          <div class="result-row"><span>Final ABV</span><span id="df_finalAbv">-</span></div>
+          <div class="result-row"><span>Guidance</span><span id="df_message">-</span></div>
+        </div>
+      </aside>
+    </section>
+    <!-- SEO Landing Start -->
+    <section class="content-block">
+      <h2>How It Works</h2>
+      <p>This calculator estimates volume additions for ABV reduction or fortification.</p>
+      <ol>
+        <li>Choose dilution or fortification mode.</li>
+        <li>Enter current volume, current ABV, target ABV, and fortifier ABV if applicable.</li>
+        <li>Review required addition volume and resulting final volume/ABV.</li>
+      </ol>
+    </section>
+
+    <section class="content-block">
+      <h2>FAQ</h2>
+      <h3>When is fortification impossible?</h3>
+      <p>If fortifier ABV is at or below target ABV, the target cannot be reached by addition.</p>
+      <h3>What does dilution mode assume?</h3>
+      <p>It assumes added water contributes volume without alcohol content.</p>
+      <h3>Should I add in one step?</h3>
+      <p>Use staged additions and re-check ABV to minimize overshoot.</p>
+    </section>
+    <!-- SEO Landing End -->
+
+    <section class="ad-slot" aria-label="Advertisement">
+      <p>Advertisement</p>
+      <div class="ad-box">300 x 250 ad slot</div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>BottleMath</p>
+    <div class="footer-links">
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../terms.html">Terms</a>
+      <a href="../affiliate-disclosure.html">Affiliate Disclosure</a>
+      <a href="../privacy.html">Privacy</a>
+      <button class="link-btn" data-cookie-settings>Cookie settings</button>
+    </div>
+  </footer>
+
+  <script src="../scripts/site.js"></script>
+  <script src="../scripts/dilution-fortification.js"></script>
+</body>
+</html>
