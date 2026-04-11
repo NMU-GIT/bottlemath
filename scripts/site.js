@@ -3,6 +3,7 @@
   const PLACEHOLDER_ORIGIN = 'https://example.com';
   let analyticsLoaded = false;
   let adsLoaded = false;
+  let cmpLoaded = false;
 
   function getMetaContent(name) {
     const element = document.querySelector('meta[name="' + name + '"]');
@@ -91,7 +92,15 @@
     canonical.href = canonicalHref;
   }
 
-  function loadExternalScript(src, attributes) {
+  function loadExternalScript(src, attributes, onload) {
+    const existing = document.querySelector('script[src="' + src + '"]');
+    if (existing) {
+      if (typeof onload === 'function') {
+        onload();
+      }
+      return;
+    }
+
     const script = document.createElement('script');
     script.src = src;
     script.async = true;
@@ -102,7 +111,34 @@
       });
     }
 
+    if (typeof onload === 'function') {
+      script.addEventListener('load', onload, { once: true });
+    }
+
     document.head.appendChild(script);
+  }
+
+  function bootstrapConsentManager() {
+    const mode = getConsentMode();
+    const cookiebotId = getMetaContent('wch-cookiebot-id');
+
+    if (cmpLoaded || mode !== 'external' || !cookiebotId) {
+      return;
+    }
+
+    cmpLoaded = true;
+
+    loadExternalScript(
+      'https://consent.cookiebot.com/uc.js',
+      {
+        id: 'Cookiebot',
+        'data-cbid': cookiebotId,
+        'data-blockingmode': 'auto'
+      },
+      function () {
+        loadExternalScript(resolvePagePath('scripts/cmp-cookiebot.js'));
+      }
+    );
   }
 
   function normalizeConsent(input) {
@@ -161,8 +197,14 @@
     const slots = document.querySelectorAll('.ad-box');
 
     slots.forEach(function (slot) {
+      const wrapper = slot.closest('.ad-slot');
+
       if (!slot.dataset.defaultText) {
         slot.dataset.defaultText = slot.textContent;
+      }
+
+      if (wrapper) {
+        wrapper.hidden = false;
       }
 
       if (!consent || !consent.ads) {
@@ -171,6 +213,9 @@
       }
 
       if (client) {
+        if (wrapper) {
+          wrapper.hidden = true;
+        }
         slot.textContent = slot.dataset.defaultText;
       } else {
         slot.textContent = 'Ad slot ready. Add your ad network client ID to activate.';
@@ -304,6 +349,7 @@
     syncStructuredDataUrls();
     syncCanonicalLink();
     exposeConsentApi();
+    bootstrapConsentManager();
     createBanner();
     bindCookieSettingsLinks();
 

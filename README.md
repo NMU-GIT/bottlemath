@@ -33,12 +33,14 @@ Static website with wine-focused calculators designed for SEO traffic and ad mon
 - `privacy.html` privacy and cookie policy
 - `styles.css` shared visual styles
 - `calculators/` individual calculator pages
+- `guides/` supporting editorial pages for SEO and ad approval depth
 - `scripts/` JavaScript calculator logic and consent handling
 - `ads.txt` seller authorization template
 - `robots.txt` crawler instructions
 - `sitemap.xml` sitemap template (replace placeholder domain)
 - `netlify.toml` static deploy settings for Netlify
 - `vercel.json` static deploy settings for Vercel
+- `MONETIZATION-LAUNCH.md` account-side launch checklist
 
 ## Run locally
 
@@ -82,11 +84,15 @@ ruby scripts/configure-site.rb \
   --origin=https://your-site.example \
   --analytics-domain=your-site.example \
   --adsense-client=ca-pub-xxxxxxxxxxxxxxxx \
+  --cookiebot-id=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx \
+  --google-site-verification=your_google_token \
+  --bing-site-verification=your_bing_token \
   --contact-email=contact@your-site.example
 ```
 
 You can provide only the flags you want to change.
 If you provide `--adsense-client`, the script also updates `ads.txt`.
+If you provide `--cookiebot-id`, the script switches consent mode to `external`.
 
 ## Analytics and ads setup
 
@@ -96,18 +102,23 @@ To enable Plausible analytics and AdSense:
 
 1. Add your domain to Plausible.
 2. Add your AdSense client ID.
-3. In each HTML page, set:
+3. Optionally add a certified CMP ID and search verification tokens.
+4. In each HTML page, set:
 
 ```html
 <meta name="wch-analytics-domain" content="yourdomain.com">
 <meta name="wch-adsense-client" content="ca-pub-xxxxxxxxxxxxxxxx">
+<meta name="wch-cookiebot-id" content="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+<meta name="wch-consent-mode" content="external">
+<meta name="google-site-verification" content="your_google_token">
+<meta name="msvalidate.01" content="your_bing_token">
 ```
 
-If you later install a certified CMP, set `window.WCH_CONSENT_MODE = 'external'` before loading `scripts/site.js`, expose a function at `window.WCH_OPEN_CMP` to open that CMP UI, and call `window.wchSetConsent({ analytics: true|false, ads: true|false })` when consent changes.
+If you set a real Cookiebot ID, `scripts/site.js` automatically loads Cookiebot and the local bridge script. Other CMPs can still use the existing `window.wchSetConsent({ analytics: true|false, ads: true|false })` hook.
 
 ### Cookiebot stub
 
-If you choose Cookiebot, load its vendor script first, then load `scripts/cmp-cookiebot.js`, then `scripts/site.js`. The Cookiebot helper maps Cookiebot consent categories to the site's analytics and ad consent flags and opens the CMP dialog from the existing cookie settings links.
+If you choose Cookiebot, the simplest path is to set `wch-cookiebot-id` and let `scripts/site.js` load the vendor script automatically. The Cookiebot helper maps Cookiebot consent categories to the site's analytics and ad consent flags and opens the CMP dialog from the existing cookie settings links.
 
 ## Before production launch
 
@@ -117,3 +128,4 @@ If you choose Cookiebot, load its vendor script first, then load `scripts/cmp-co
 - Review tax/duty assumptions in calculators before each launch cycle.
 - Add Google Search Console and submit your live sitemap.
 - Install a certified CMP before serving personalized Google ads in Europe.
+- Publish supporting guides and link them internally from relevant calculators.

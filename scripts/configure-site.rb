@@ -19,6 +19,22 @@ OptionParser.new do |parser|
     options[:adsense_client] = value
   end
 
+  parser.on('--cookiebot-id=ID', 'Set the Cookiebot ID on all HTML pages and switch consent mode to external') do |value|
+    options[:cookiebot_id] = value
+  end
+
+  parser.on('--consent-mode=MODE', 'Set consent mode to local or external') do |value|
+    options[:consent_mode] = value.to_s.downcase
+  end
+
+  parser.on('--google-site-verification=TOKEN', 'Set the Google Search Console verification token') do |value|
+    options[:google_site_verification] = value
+  end
+
+  parser.on('--bing-site-verification=TOKEN', 'Set the Bing Webmaster verification token') do |value|
+    options[:bing_site_verification] = value
+  end
+
   parser.on('--contact-email=EMAIL', 'Replace the public contact email placeholder') do |value|
     options[:contact_email] = value
   end
@@ -37,6 +53,8 @@ text_files = all_files.select do |path|
 end
 html_files = text_files.select { |path| File.extname(path) == '.html' }
 ads_txt_path = File.join(root, 'ads.txt')
+effective_consent_mode = options[:consent_mode]
+effective_consent_mode = 'external' if effective_consent_mode.nil? && options[:cookiebot_id]
 
 updated = []
 
@@ -55,6 +73,34 @@ html_files.each do |path|
     content.gsub!(
       /(<meta name="wch-adsense-client" content=")[^"]*(")/,
       "\\1#{options[:adsense_client]}\\2"
+    )
+  end
+
+  if options[:cookiebot_id]
+    content.gsub!(
+      /(<meta name="wch-cookiebot-id" content=")[^"]*(")/,
+      "\\1#{options[:cookiebot_id]}\\2"
+    )
+  end
+
+  if effective_consent_mode
+    content.gsub!(
+      /(<meta name="wch-consent-mode" content=")[^"]*(")/,
+      "\\1#{effective_consent_mode}\\2"
+    )
+  end
+
+  if options[:google_site_verification]
+    content.gsub!(
+      /(<meta name="google-site-verification" content=")[^"]*(")/,
+      "\\1#{options[:google_site_verification]}\\2"
+    )
+  end
+
+  if options[:bing_site_verification]
+    content.gsub!(
+      /(<meta name="msvalidate\.01" content=")[^"]*(")/,
+      "\\1#{options[:bing_site_verification]}\\2"
     )
   end
 
