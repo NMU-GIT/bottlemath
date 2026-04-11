@@ -122,11 +122,25 @@
     const mode = getConsentMode();
     const cookiebotId = getMetaContent('wch-cookiebot-id');
 
-    if (cmpLoaded || mode !== 'external' || !cookiebotId) {
+    if (cmpLoaded || mode !== 'external') {
       return;
     }
 
     cmpLoaded = true;
+
+    if (!cookiebotId) {
+      window.WCH_OPEN_CMP = function () {
+        window.googlefc = window.googlefc || {};
+        window.googlefc.callbackQueue = window.googlefc.callbackQueue || [];
+        window.googlefc.callbackQueue.push(function () {
+          if (typeof window.googlefc.showRevocationMessage === 'function') {
+            window.googlefc.showRevocationMessage();
+          }
+        });
+      };
+
+      return;
+    }
 
     loadExternalScript(
       'https://consent.cookiebot.com/uc.js',
@@ -195,6 +209,7 @@
   function updateAdPlaceholders(consent) {
     const client = getMetaContent('wch-adsense-client');
     const slots = document.querySelectorAll('.ad-box');
+    const externalConsent = getConsentMode() === 'external' && !getMetaContent('wch-cookiebot-id');
 
     slots.forEach(function (slot) {
       const wrapper = slot.closest('.ad-slot');
@@ -205,6 +220,19 @@
 
       if (wrapper) {
         wrapper.hidden = false;
+      }
+
+      if (externalConsent) {
+        if (client && wrapper) {
+          wrapper.hidden = true;
+        }
+
+        if (client) {
+          slot.textContent = slot.dataset.defaultText;
+        } else {
+          slot.textContent = 'Ad slot ready. Add your ad network client ID to activate.';
+        }
+        return;
       }
 
       if (!consent || !consent.ads) {
@@ -352,6 +380,12 @@
     bootstrapConsentManager();
     createBanner();
     bindCookieSettingsLinks();
+
+    if (getConsentMode() === 'external' && !getMetaContent('wch-cookiebot-id')) {
+      updateAdPlaceholders({ ads: Boolean(getMetaContent('wch-adsense-client')) });
+      hideBanner();
+      return;
+    }
 
     const pendingConsent = readPendingConsent();
     if (pendingConsent) {
