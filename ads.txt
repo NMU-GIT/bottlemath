@@ -1,3 +1,2 @@
-# Replace pub-0000000000000000 with your real AdSense publisher ID before applying for ads.
-# Google AdSense seller record format:
-google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+# BottleMath Google AdSense seller record:
+google.com, pub-5482612079786875, DIRECT, f08c47fec0942fa0

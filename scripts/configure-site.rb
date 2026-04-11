@@ -4,6 +4,29 @@ require 'optparse'
 
 options = {}
 
+def upsert_adsense_account_meta(content, client)
+  replacement = %(  <meta name="google-adsense-account" content="#{client}">\n)
+
+  if content.match?(/<meta name="google-adsense-account" content="[^"]*">\n?/)
+    content.gsub(/<meta name="google-adsense-account" content="[^"]*">\n?/, replacement)
+  else
+    content.sub(/(<meta name="wch-adsense-client" content="[^"]*">\n)/, "\\1#{replacement}")
+  end
+end
+
+def upsert_adsense_bootstrap(content, client)
+  replacement = %(  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=#{client}" crossorigin="anonymous" data-wch-adsense></script>\n)
+
+  if content.match?(/<script async src="https:\/\/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js\?client=[^"]+" crossorigin="anonymous"(?: data-wch-adsense)?><\/script>\n?/)
+    content.gsub(
+      /<script async src="https:\/\/pagead2\.googlesyndication\.com\/pagead\/js\/adsbygoogle\.js\?client=[^"]+" crossorigin="anonymous"(?: data-wch-adsense)?><\/script>\n?/,
+      replacement
+    )
+  else
+    content.sub(/(<link rel="stylesheet" href="[^"]+">\n)/, "#{replacement}\\1")
+  end
+end
+
 OptionParser.new do |parser|
   parser.banner = 'Usage: ruby scripts/configure-site.rb [options]'
 
@@ -74,6 +97,9 @@ html_files.each do |path|
       /(<meta name="wch-adsense-client" content=")[^"]*(")/,
       "\\1#{options[:adsense_client]}\\2"
     )
+
+    content = upsert_adsense_account_meta(content, options[:adsense_client])
+    content = upsert_adsense_bootstrap(content, options[:adsense_client])
   end
 
   if options[:cookiebot_id]
