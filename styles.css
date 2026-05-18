@@ -94,9 +94,9 @@ nav a {
 
 .hero-editorial {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
-  gap: clamp(1rem, 3vw, 1.7rem);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(0.9rem, 2.4vw, 1.4rem);
+  align-items: end;
   overflow: hidden;
   background:
     radial-gradient(circle at 76% 18%, rgba(246, 215, 172, 0.28) 0%, transparent 29%),
@@ -113,30 +113,31 @@ nav a {
 }
 
 .hero-media {
-  position: relative;
-  width: min(100%, 300px);
-  min-height: clamp(200px, 24vw, 270px);
+  display: grid;
+  grid-template-columns: repeat(3, 58px);
+  gap: 0.35rem;
+  width: auto;
+  min-height: 0;
+  padding: 0.35rem;
+  border: 1px solid rgba(255, 248, 238, 0.18);
+  border-radius: 18px;
+  background: rgba(255, 248, 238, 0.09);
   justify-self: end;
+  align-self: end;
 }
 
 .hero-media::before {
-  content: '';
-  position: absolute;
-  inset: 13% 8% 10% 12%;
-  border-radius: 24px;
-  background: rgba(255, 248, 238, 0.1);
-  border: 1px solid rgba(255, 248, 238, 0.16);
-  transform: rotate(2deg);
+  display: none;
 }
 
 .hero-frame {
-  position: absolute;
+  position: relative;
   margin: 0;
   overflow: hidden;
   border: 1px solid rgba(255, 248, 238, 0.34);
-  border-radius: 18px;
+  border-radius: 13px;
   background: #2a1118;
-  box-shadow: 0 14px 26px rgba(32, 10, 18, 0.3);
+  box-shadow: 0 8px 16px rgba(32, 10, 18, 0.24);
 }
 
 .hero-frame img {
@@ -147,8 +148,10 @@ nav a {
 }
 
 .hero-frame-main {
-  inset: 0 25% 2% 18%;
-  transform: rotate(-1.4deg);
+  inset: auto;
+  width: 58px;
+  height: 78px;
+  transform: none;
 }
 
 .hero-frame-main img {
@@ -156,11 +159,10 @@ nav a {
 }
 
 .hero-frame-grapes {
-  top: 0.4rem;
-  left: 0;
-  width: 36%;
-  height: 38%;
-  transform: rotate(-5deg);
+  inset: auto;
+  width: 58px;
+  height: 78px;
+  transform: none;
 }
 
 .hero-frame-grapes img {
@@ -168,11 +170,10 @@ nav a {
 }
 
 .hero-frame-bottles {
-  right: 0;
-  bottom: 0.6rem;
-  width: 43%;
-  height: 40%;
-  transform: rotate(3.5deg);
+  inset: auto;
+  width: 58px;
+  height: 78px;
+  transform: none;
 }
 
 .hero-frame-bottles img {
@@ -622,8 +623,8 @@ button:hover {
   }
 
   .hero-media {
-    width: min(100%, 420px);
-    min-height: 190px;
+    width: fit-content;
+    min-height: 0;
     justify-self: start;
   }
 }
@@ -642,27 +643,24 @@ button:hover {
   }
 
   .hero-media {
-    min-height: 160px;
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    min-height: 0;
   }
 
   .hero-frame-main {
-    inset: 0 auto 0 0;
-    width: 38%;
+    width: auto;
+    height: 54px;
   }
 
   .hero-frame-grapes {
-    top: 12%;
-    left: 34%;
-    width: 30%;
-    height: 68%;
-    transform: rotate(-2deg);
+    width: auto;
+    height: 54px;
   }
 
   .hero-frame-bottles {
-    width: 32%;
-    height: 70%;
-    bottom: 0.6rem;
-    transform: rotate(2deg);
+    width: auto;
+    height: 54px;
   }
 
   .form-grid {
