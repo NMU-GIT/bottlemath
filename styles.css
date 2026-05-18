@@ -94,8 +94,8 @@ nav a {
 
 .hero-editorial {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 1.1fr);
-  gap: clamp(1.2rem, 4vw, 2.2rem);
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+  gap: clamp(1rem, 3vw, 1.7rem);
   align-items: center;
   overflow: hidden;
   background:
@@ -114,14 +114,16 @@ nav a {
 
 .hero-media {
   position: relative;
-  min-height: clamp(350px, 42vw, 520px);
+  width: min(100%, 300px);
+  min-height: clamp(200px, 24vw, 270px);
+  justify-self: end;
 }
 
 .hero-media::before {
   content: '';
   position: absolute;
-  inset: 8% 3% 6% 12%;
-  border-radius: 32px;
+  inset: 13% 8% 10% 12%;
+  border-radius: 24px;
   background: rgba(255, 248, 238, 0.1);
   border: 1px solid rgba(255, 248, 238, 0.16);
   transform: rotate(2deg);
@@ -132,9 +134,9 @@ nav a {
   margin: 0;
   overflow: hidden;
   border: 1px solid rgba(255, 248, 238, 0.34);
-  border-radius: 22px;
+  border-radius: 18px;
   background: #2a1118;
-  box-shadow: 0 22px 38px rgba(32, 10, 18, 0.32);
+  box-shadow: 0 14px 26px rgba(32, 10, 18, 0.3);
 }
 
 .hero-frame img {
@@ -145,7 +147,7 @@ nav a {
 }
 
 .hero-frame-main {
-  inset: 0 9% 0 14%;
+  inset: 0 25% 2% 18%;
   transform: rotate(-1.4deg);
 }
 
@@ -154,10 +156,10 @@ nav a {
 }
 
 .hero-frame-grapes {
-  top: 0.9rem;
+  top: 0.4rem;
   left: 0;
-  width: 34%;
-  height: 35%;
+  width: 36%;
+  height: 38%;
   transform: rotate(-5deg);
 }
 
@@ -167,9 +169,9 @@ nav a {
 
 .hero-frame-bottles {
   right: 0;
-  bottom: 1.1rem;
-  width: 41%;
-  height: 42%;
+  bottom: 0.6rem;
+  width: 43%;
+  height: 40%;
   transform: rotate(3.5deg);
 }
 
@@ -620,7 +622,9 @@ button:hover {
   }
 
   .hero-media {
-    min-height: 390px;
+    width: min(100%, 420px);
+    min-height: 190px;
+    justify-self: start;
   }
 }
 
@@ -638,22 +642,27 @@ button:hover {
   }
 
   .hero-media {
-    min-height: 330px;
+    min-height: 160px;
   }
 
   .hero-frame-main {
-    inset: 0 14% 0 4%;
+    inset: 0 auto 0 0;
+    width: 38%;
   }
 
   .hero-frame-grapes {
-    width: 36%;
-    height: 32%;
+    top: 12%;
+    left: 34%;
+    width: 30%;
+    height: 68%;
+    transform: rotate(-2deg);
   }
 
   .hero-frame-bottles {
-    width: 43%;
-    height: 38%;
+    width: 32%;
+    height: 70%;
     bottom: 0.6rem;
+    transform: rotate(2deg);
   }
 
   .form-grid {
